@@ -4,7 +4,7 @@
 #
 Name     : appdirs
 Version  : 1.4.0
-Release  : 4
+Release  : 5
 URL      : https://pypi.python.org/packages/source/a/appdirs/appdirs-1.4.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/a/appdirs/appdirs-1.4.0.tar.gz
 Summary  : A small Python module for determining appropriate " +         "platform-specific dirs, e.g. a "user data dir".
