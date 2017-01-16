@@ -4,7 +4,7 @@
 #
 Name     : appdirs
 Version  : 1.4.0
-Release  : 12
+Release  : 13
 URL      : https://pypi.python.org/packages/source/a/appdirs/appdirs-1.4.0.tar.gz
 Source0  : https://pypi.python.org/packages/source/a/appdirs/appdirs-1.4.0.tar.gz
 Summary  : A small Python module for determining appropriate " +         "platform-specific dirs, e.g. a "user data dir".
@@ -33,18 +33,21 @@ python components for the appdirs package.
 %setup -q -n appdirs-1.4.0
 
 %build
+export LANG=C
+export SOURCE_DATE_EPOCH=1484529668
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
-python2 setup.py test
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+PYTHONPATH=%{buildroot}/usr/lib/python2.7/site-packages python2 setup.py test
 %install
+export SOURCE_DATE_EPOCH=1484529668
 rm -rf %{buildroot}
-python2 setup.py build -b py2 install --root=%{buildroot}
-python3 setup.py build -b py3 install --root=%{buildroot}
+python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
+python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
 
 %files
 %defattr(-,root,root,-)
