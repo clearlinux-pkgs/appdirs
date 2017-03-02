@@ -1,5 +1,5 @@
 PKG_NAME := appdirs
-URL := https://pypi.python.org/packages/source/a/appdirs/appdirs-1.4.0.tar.gz
+URL := http://pypi.debian.net/appdirs/appdirs-1.4.2.tar.gz
 
 
 include ../common/Makefile.common
