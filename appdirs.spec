@@ -4,12 +4,13 @@
 #
 Name     : appdirs
 Version  : 1.4.3
-Release  : 18
+Release  : 19
 URL      : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Source0  : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Summary  : A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
 Group    : Development/Tools
 License  : MIT
+Requires: appdirs-legacypython
 Requires: appdirs-python
 BuildRequires : pbr
 BuildRequires : pip
@@ -21,9 +22,18 @@ BuildRequires : setuptools
 .. image:: https://secure.travis-ci.org/ActiveState/appdirs.png
 :target: http://travis-ci.org/ActiveState/appdirs
 
+%package legacypython
+Summary: legacypython components for the appdirs package.
+Group: Default
+
+%description legacypython
+legacypython components for the appdirs package.
+
+
 %package python
 Summary: python components for the appdirs package.
 Group: Default
+Requires: appdirs-legacypython
 
 %description python
 python components for the appdirs package.
@@ -37,7 +47,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1503071731
+export SOURCE_DATE_EPOCH=1504997808
 python2 setup.py build -b py2
 python3 setup.py build -b py3
 
@@ -47,7 +57,7 @@ export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
 %install
-export SOURCE_DATE_EPOCH=1503071731
+export SOURCE_DATE_EPOCH=1504997808
 rm -rf %{buildroot}
 python2 -tt setup.py build -b py2 install --root=%{buildroot} --force
 python3 -tt setup.py build -b py3 install --root=%{buildroot} --force
@@ -58,7 +68,10 @@ echo ----[ mark ]----
 %files
 %defattr(-,root,root,-)
 
-%files python
+%files legacypython
 %defattr(-,root,root,-)
 /usr/lib/python2*/*
+
+%files python
+%defattr(-,root,root,-)
 /usr/lib/python3*/*
