@@ -4,23 +4,31 @@
 #
 Name     : appdirs
 Version  : 1.4.3
-Release  : 27
+Release  : 28
 URL      : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Source0  : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Summary  : A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
 Group    : Development/Tools
 License  : MIT
 Requires: appdirs-python3
+Requires: appdirs-license
 Requires: appdirs-python
 BuildRequires : pbr
 BuildRequires : pip
-BuildRequires : python-dev
 BuildRequires : python3-dev
 BuildRequires : setuptools
 
 %description
 .. image:: https://secure.travis-ci.org/ActiveState/appdirs.png
 :target: http://travis-ci.org/ActiveState/appdirs
+
+%package license
+Summary: license components for the appdirs package.
+Group: Default
+
+%description license
+license components for the appdirs package.
+
 
 %package python
 Summary: python components for the appdirs package.
@@ -48,7 +56,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1523285261
+export SOURCE_DATE_EPOCH=1529090611
 python3 setup.py build -b py3
 
 %check
@@ -58,6 +66,8 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 PYTHONPATH=%{buildroot}/usr/lib/python3.6/site-packages python3 setup.py test
 %install
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/appdirs
+cp LICENSE.txt %{buildroot}/usr/share/doc/appdirs/LICENSE.txt
 python3 -tt setup.py build -b py3 install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -65,6 +75,10 @@ echo ----[ mark ]----
 
 %files
 %defattr(-,root,root,-)
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/appdirs/LICENSE.txt
 
 %files python
 %defattr(-,root,root,-)
