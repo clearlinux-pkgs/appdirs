@@ -4,7 +4,7 @@
 #
 Name     : appdirs
 Version  : 1.4.3
-Release  : 34
+Release  : 35
 URL      : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Source0  : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Summary  : A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
@@ -56,7 +56,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1530325292
+export SOURCE_DATE_EPOCH=1530326020
 python3 setup.py build -b py3
 
 %check
