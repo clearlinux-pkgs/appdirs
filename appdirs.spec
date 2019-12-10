@@ -4,19 +4,16 @@
 #
 Name     : appdirs
 Version  : 1.4.3
-Release  : 44
+Release  : 45
 URL      : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Source0  : http://pypi.debian.net/appdirs/appdirs-1.4.3.tar.gz
 Summary  : A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
 Group    : Development/Tools
 License  : MIT
-Requires: appdirs-python3
-Requires: appdirs-license
-Requires: appdirs-python
-BuildRequires : pbr
-BuildRequires : pip
-BuildRequires : python3-dev
-BuildRequires : setuptools
+Requires: appdirs-license = %{version}-%{release}
+Requires: appdirs-python = %{version}-%{release}
+Requires: appdirs-python3 = %{version}-%{release}
+BuildRequires : buildreq-distutils3
 
 %description
 .. image:: https://secure.travis-ci.org/ActiveState/appdirs.png
@@ -33,7 +30,7 @@ license components for the appdirs package.
 %package python
 Summary: python components for the appdirs package.
 Group: Default
-Requires: appdirs-python3
+Requires: appdirs-python3 = %{version}-%{release}
 
 %description python
 python components for the appdirs package.
@@ -50,25 +47,33 @@ python3 components for the appdirs package.
 
 %prep
 %setup -q -n appdirs-1.4.3
+cd %{_builddir}/appdirs-1.4.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1530326020
-python3 setup.py build -b py3
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1576007753
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
+python3 setup.py build
 
 %check
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-PYTHONPATH=%{buildroot}/usr/lib/python3.7/site-packages python3 setup.py test
+PYTHONPATH=%{buildroot}$(python -c "import sys; print(sys.path[-1])") python setup.py test
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/appdirs
-cp LICENSE.txt %{buildroot}/usr/share/doc/appdirs/LICENSE.txt
-python3 -tt setup.py build -b py3 install --root=%{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/appdirs
+cp %{_builddir}/appdirs-1.4.3/LICENSE.txt %{buildroot}/usr/share/package-licenses/appdirs/105885d8433c92e504e27d9134781d0c752e1166
+python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
 echo ----[ mark ]----
@@ -77,8 +82,8 @@ echo ----[ mark ]----
 %defattr(-,root,root,-)
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/appdirs/LICENSE.txt
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/appdirs/105885d8433c92e504e27d9134781d0c752e1166
 
 %files python
 %defattr(-,root,root,-)

@@ -1,2 +1,9 @@
 # This file contains recursive sources that require this package
+conda
+docker-py
+fs
+isort
+openstacksdk
+pako
 python-zeep
+pytools
