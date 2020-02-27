@@ -7,3 +7,4 @@ openstacksdk
 pako
 python-zeep
 pytools
+virtualenv
