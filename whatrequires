@@ -1,12 +1,8 @@
 # This file contains recursive sources that require this package
 Cura
+ansible
 cantarell-fonts
 conda
 docker-py
+fissix
 fs
-isort
-openstacksdk
-pako
-python-zeep
-pytools
-virtualenv
